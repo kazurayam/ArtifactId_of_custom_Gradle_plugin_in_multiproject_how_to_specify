@@ -1,0 +1,4 @@
+//
+rootProject.name = 'introduction_to_writing_gradle_plugins'
+include('plugin')
+
