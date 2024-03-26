@@ -27,7 +27,7 @@ abstract class FileDiffTask extends DefaultTask {
         } else {
             File largestFile = size(file1) > size(file2) ?
                     file1.get().asFile : file2.get().asFile
-            diffResult = "${largetFile.toString()} was the larget file at ${largestFile.size()} bytes."
+            diffResult = "${largestFile.toString()} was the largest file at ${largestFile.size()} bytes."
         }
 
         resultFile.get().asFile.write diffResult
