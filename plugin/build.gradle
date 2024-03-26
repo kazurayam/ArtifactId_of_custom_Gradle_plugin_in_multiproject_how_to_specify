@@ -4,9 +4,6 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.kazurayam'
-version = '0.1.0-SNAPSHOT'
-
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -32,7 +29,9 @@ gradlePlugin {
 publishing {
     publications {
         maven(MavenPublication) {
+            group = 'com.kazurayam'
             artifactId = 'file-diff-plugin'
+            version = '0.1.0-SNAPSHOT'
         }
     }
 }
