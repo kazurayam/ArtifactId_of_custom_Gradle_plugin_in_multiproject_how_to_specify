@@ -1,4 +1,4 @@
-//
-rootProject.name = 'introduction_to_writing_gradle_plugins'
+
+rootProject.name = 'ArtifactId_of_custom_'
 include('plugin')
 
