@@ -67,7 +67,7 @@ In the following description, I would call the `Artifact_of_custom_Gradle_plugin
 
 Please note that the `gradle init` command generated a Multi-project which holds a subproject named **`plugin`** where I would locate the source codes for my custom Gradle plugin.
 
-The `settings.gradle` file under the root directory had the following code.
+The `settings.gradle` file under the root directory had [the following code](https://github.com/kazurayam/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/blob/master/settings.gradle).
 
 ```
 rootProject.name = 'ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify'
@@ -80,7 +80,7 @@ The `rootProject.name` was assigned with a name derived from the root directory.
 
 I copy & pasted the sample Groovy code by Tom, that includes[Extension class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#3-extension-class), [Task class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#4-task-class), [Plugin class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#5-plugin-class) and [Test for the plugin](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#6-adding-a-plugin-integration-test). I slightly modified them (the package name, etc). I could successfully compile them. The unit-test passed. I could build it. Tom's sample looked fine. 
 
-I had the `plugin/build.gradle` files was as this:
+I had the `plugin/build.gradle` files was as [this](https://github.com/kazurayam/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/blob/master/plugin/build.gradle):
 
 ```
 plugins {
@@ -124,16 +124,16 @@ I tried to deploy the jar to the `~/.m2/repository` (so called Maven local repos
 
 ![02](https://kazurayam.github.io/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/02_artifactId_plugin.png)
 
-Here I found a problem. `gradle publishToMavenLocal` created 2 directories
+Here I got a problem. The `$ gradle publishToMavenLocal` command created 2 directories
 
 - `.m2/repository/com/kazurayam/file-diff`
 - `.m2/repository/com/kazurayam/plugin`
 
-I didn't like the name of the second directory `plugin` which was obviously too generic, not specific enough to identify my custom Gradle plugin. 
+I didn't like the name of the second directory **plugin**, which was too generic, not specific enough to identify my custom Gradle plugin. Also I wanted the second directory should have a name starting with the 1st directory `file-dife` + something. With the same prefix, 2 directories will be close to each other when I get the list of the `.m2` directory.
 
-I wanted the second directory to be named `file-diff-plugin` or `file-diff-impl`. However, I did not know how to specify it.
+So I wanted to specify the second directory to be named `file-diff-plugin` or `file-diff-impl`. However, I did not know how to.
 
-How can I do it?
+How can I specify the artifactId of my custom Gradle plugin observed in the Maven local repository?
 
 ## Solution
 
@@ -157,55 +157,23 @@ Success!
 
 ## Description
 
-I read an artile [Introduction to Gradle Plugins](https://tomgregory.com/gradle/introduction-to-gradle-plugins/) by Tom Gregory.
+The `publishToMavenLocal` task is provided by the Gradle `maven-publish` plugin. The `maven-publish` plugin determines the artifactId of the published artifacts. The [doc](https://docs.gradle.org/current/userguide/publishing_maven.html#sec:identity_values_in_the_generated_pom) writes:
 
-I made the project as a Gradle Multi-project.
+>Identity values in the generated POM
+> 
+>The attributes of the generated POM file will contain identity values derived from the following project properties:
+> - groupId - Project.getGroup()
+> - artifactId - Project.getName()
+> - version - Project.getVersion()
 
-The root project was named as `introduction_to_writing_gradle_plugin`
+The ArtifactId is derived from the Project.getName(), which will default to the name of sub-project's directory. This is the reason why I got the artifactId `plugin` which I want to replace to `file-diff-plugin`.
 
-I typed the sample code as is. 
+The doc also writes:
 
-I did `$ gradle publishToMavenCentral`.
+>Overriding the default identity values is easy: simply specify the groupId, artifactId or version attributes when configuring the MavenPublication.
 
-In the `.m2` directory (Maven Local repository), I got 2 directories newly added.
+And the doc shows a sample code. 
 
-- $HOME/.m2/repository/com/kazurayam/file-diff/com.kazurayam.file-diff.gradle.plugin/0.1.0-SNAPSHOT/com.kazurayam.file-diff.gradle.plugin-0.1.0-SNAPSHOT.pom
-- $HOME/.m2/repository/com/kazurayam/**plugin**/0.1.0-SNAPSHOT/**plugin**-0.1.0-SNAPSHOT.jar
+## Conclusion
 
-I did not like the 2nd name **`plugin`**.
-I wanted to change it to `file-diff-plugin`.
-
-I edited the `settings.gradle` file as
-
-```
-rootProject.name = 'file-diff-plugin'
-```
-
-This did not have effect to the name of the jar file.
-
-I struggled days and nights.
-
-Finally found the way.
-
-I added the following code in the `plugin/build.gradle` file:
-
-```
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId = 'file-diff-plugin'
-        }
-    }
-}
-```
-
-This code section determined the artifactId of the jar file.
-
-It seems that the "Java Gradle Development Plugin" indirectly calls the "Maven Publish Plugin" which determines the name of jar files. The documentation of the Maven Publish Plugin clearly describes how to expclicity specify the artifactId.
-
-- https://docs.gradle.org/current/userguide/publishing_maven.html
-
-Things resolved.
-
-
-
+I could find the way to specify the artifactId of my Gradle custom plugin. Just I needed to read the doc of the Maven Publish plugin. That's all.

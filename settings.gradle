@@ -1,4 +1,3 @@
-
-rootProject.name = 'ArtifactId_of_custom_'
+rootProject.name = 'ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify'
 include('plugin')
 
