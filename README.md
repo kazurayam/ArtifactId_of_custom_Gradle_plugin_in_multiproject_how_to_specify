@@ -175,8 +175,28 @@ The doc also writes:
 >Overriding the default identity values is easy: simply specify the groupId, artifactId or version attributes when configuring the MavenPublication.
 
 And the doc shows a sample code. 
-g
+
 ## Conclusion
 
 I could find the way to specify the artifactId of my Gradle custom plugin. Just I needed to read the doc of the Maven Publish plugin. That's all.
 
+## Appendix: JAR created by "gradle jar" command
+
+I would add a memo here. I executed the following command:
+
+```
+$ cd <root dir>/plugin
+$ gradle clean jar
+```
+
+Then I got a jar under the `plugin/build/libs` directory` with name `plugin-x.x.x.jar`.
+
+![11](https://kazurayam.github.io/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/11_libs_plugin_jar.png)
+
+I do not like the name of jar. I want to specify the artifactId of the jar to be `file-diff-plugin`. How can I make it?
+
+Answer: change the `plugin/build.gradle`. I added a line where I substituted the value of a Gradle project's property `project.artifactsBaseName` with a string that I wanted.
+
+![12](https://kazurayam.github.io/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/12_libs_controlled_artifactId.png)
+
+See the doc of [Gradle Jar task](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html#org.gradle.api.tasks.bundling.Jar:archiveBaseName)
