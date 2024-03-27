@@ -10,7 +10,8 @@ repositories {
 }
 
 group = 'com.kazurayam'
-version = '0.1.0-SNAPSHOT'
+archivesBaseName = 'file-diff-plugin'  // THIS IS IT!
+version = '0.2.0'
 
 dependencies {
     // Use the awesome Spock testing and specification framework
