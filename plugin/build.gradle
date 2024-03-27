@@ -9,10 +9,12 @@ repositories {
     mavenCentral()
 }
 
+group = 'com.kazurayam'
+version = '0.1.0-SNAPSHOT'
+
 dependencies {
     // Use the awesome Spock testing and specification framework
     testImplementation libs.spock.core
-
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
@@ -26,40 +28,13 @@ gradlePlugin {
     }
 }
 
+/*
 publishing {
     publications {
         maven(MavenPublication) {
-            group = 'com.kazurayam'
             artifactId = 'file-diff-plugin'
-            version = '0.1.0-SNAPSHOT'
         }
     }
 }
+ */
 
-// Add a source set for the functional test suite
-sourceSets {
-    functionalTest {
-    }
-}
-
-configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
-configurations.functionalTestRuntimeOnly.extendsFrom(configurations.testRuntimeOnly)
-
-// Add a task to run the functional tests
-tasks.register('functionalTest', Test) {
-    testClassesDirs = sourceSets.functionalTest.output.classesDirs
-    classpath = sourceSets.functionalTest.runtimeClasspath
-    useJUnitPlatform()
-}
-
-gradlePlugin.testSourceSets.add(sourceSets.functionalTest)
-
-tasks.named('check') {
-    // Run the functional tests as part of `check`
-    dependsOn(tasks.functionalTest)
-}
-
-tasks.named('test') {
-    // Use JUnit Jupiter for unit tests.
-    useJUnitPlatform()
-}
