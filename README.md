@@ -74,11 +74,13 @@ rootProject.name = 'ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_sp
 include('plugin')
 ```
 
-The `rootProject.name` was assigned with a name derived from the root directory. It looked unsuitable. But I kept this `settings.gradle` file unchanged. The project's structure has been settled. So I could start creating my Gradle plugin. I searched for some tutorials in the net and found an article by Tom Gregory:
+The `rootProject.name` was assigned with a name derived from the root directory. It looked unsuitable. But I kept this `settings.gradle` file unchanged. 
+
+The project's structure has been settled. So I could start creating my Gradle plugin. I searched for some tutorials in the net and found an article by Tom Gregory:
 
 - [Introduction to writing Gradle plugins](https://tomgregory.com/gradle/introduction-to-gradle-plugins/)
 
-I copy & pasted the sample Groovy code by Tom, that includes[Extension class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#3-extension-class), [Task class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#4-task-class), [Plugin class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#5-plugin-class) and [Test for the plugin](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#6-adding-a-plugin-integration-test). I slightly modified them (the package name, etc). I could successfully compile them. The unit-test passed. I could build it. Tom's sample looked fine. 
+I copy & pasted the sample Groovy code by Tom, that includes [Extension class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#3-extension-class), [Task class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#4-task-class), [Plugin class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#5-plugin-class) and [Test for the plugin](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#6-adding-a-plugin-integration-test). I slightly modified them (the package name, etc). I could successfully compile them. The unit-test passed. I could build it. Tom's sample looked fine. 
 
 I had the `plugin/build.gradle` files was as [this](https://github.com/kazurayam/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/blob/master/plugin/build.gradle):
 
@@ -177,3 +179,4 @@ And the doc shows a sample code.
 ## Conclusion
 
 I could find the way to specify the artifactId of my Gradle custom plugin. Just I needed to read the doc of the Maven Publish plugin. That's all.
+
