@@ -78,17 +78,9 @@ The `rootProject.name` was assigned with a name derived from the root directory.
 
 - [Introduction to writing Gradle plugins](https://tomgregory.com/gradle/introduction-to-gradle-plugins/)
 
-I copy-and-pasted the sample Groovy code by Tom, that includes
-- [Extension class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#3-extension-class)
-- [Task class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#4-task-class)
-- [Plugin class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#5-plugin-class)
-- [Test for the plugin](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#6-adding-a-plugin-integration-test)
+I copy & pasted the sample Groovy code by Tom, that includes[Extension class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#3-extension-class), [Task class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#4-task-class), [Plugin class](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#5-plugin-class) and [Test for the plugin](https://tomgregory.com/gradle/introduction-to-gradle-plugins/#6-adding-a-plugin-integration-test). I slightly modified them (the package name, etc). I could successfully compile them. The unit-test passed. I could build it. Tom's sample looked fine. 
 
-I slightly modified them (the package name, etc). I could compile them. The unit-test passed. I could build it. Everything looked fine. 
-
-So I tried deploying the jar to the `~/.m2/repository` so called Maven local repository. Then I encountered a problem.
-
-The `plugin/build.gradle` files was as this:
+I had the `plugin/build.gradle` files was as this:
 
 ```
 plugins {
@@ -118,6 +110,38 @@ gradlePlugin {
     }
 }
 ```
+
+I tried to deploy the jar to the `~/.m2/repository` (so called Maven local repository). 
+
+```
+~/tmp/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify (master)
+$ cd plugin
+~/tmp/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/plugin (master)
+$ gradle publicToMavenLocal
+```
+
+I tried to deploy the jar to the `~/.m2/repository` (so called Maven local repository). 
+![02](https://kazurayam.github.io/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/02_artifactId_plugin.png)
+
+Here I found a problem. `gradle publishToMavenLocal` created 2 directories
+
+- `./m2/repository/com/kazurayam/file-diff`
+- `./m2/repository/com/kazurayam/plugin`
+
+I do not like the name of the second directory `plugin`, which is not specific enough.
+
+I wanted the second directory to be named `file-diff-plugin` or `file-diff-impl`. However, I did not know how to specify it.
+
+How can I do it?
+
+
+
+
+
+```
+
+Then I realized a problem.
+
 
 Then I published the "file-diff-plugin" into the local Maven repository ($HOME/.m2 directory). I got the following result.
 
