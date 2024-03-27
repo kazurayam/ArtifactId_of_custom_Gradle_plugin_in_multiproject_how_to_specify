@@ -121,37 +121,23 @@ $ gradle publicToMavenLocal
 ```
 
 I tried to deploy the jar to the `~/.m2/repository` (so called Maven local repository). 
+
 ![02](https://kazurayam.github.io/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/02_artifactId_plugin.png)
 
 Here I found a problem. `gradle publishToMavenLocal` created 2 directories
 
-- `./m2/repository/com/kazurayam/file-diff`
-- `./m2/repository/com/kazurayam/plugin`
+- `.m2/repository/com/kazurayam/file-diff`
+- `.m2/repository/com/kazurayam/plugin`
 
-I do not like the name of the second directory `plugin`, which is not specific enough.
+I didn't like the name of the second directory `plugin` which was obviously too generic, not specific enough to identify my custom Gradle plugin. 
 
 I wanted the second directory to be named `file-diff-plugin` or `file-diff-impl`. However, I did not know how to specify it.
 
 How can I do it?
 
+## Solution
 
-
-
-
-```
-
-Then I realized a problem.
-
-
-Then I published the "file-diff-plugin" into the local Maven repository ($HOME/.m2 directory). I got the following result.
-
-![02](https://kazurayam.github.io/Artifact_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/02_artifactId_plugin.png)
-
-
-
-## 問題と解決
-
-カスタムGradleプラグインを開発しようとした。`gradle init`してPlguinプロジェクトを選択するとマルチプロジェクトが生成される。その枠組みにしたがってTom Gregoryの記事のサンプルコードを打ち込んだ。`gradle publishToMavenLocal`するとjarファイルが生成されて.m2ディレクトリ配下に出力された。生成されたディレクトリの名前が `file-diff-plugin-VERSION.jar` となると期待していたのにそうならなかった。`plugin-VERSION.jar` になった。artifactIdがpluginとなった。サププロジェクトのフォルダ名がpluginだからこうなった。フォルダ名を変更したくはなかった。jarファイルの名前だけをコードで指定する方法を探した。実はこの問題は私にとって数年来未解決の問題であった。なんとかしたかった。ーーーーついに見つけた。`plugin/build.gradle` ファイルの次のコードを記述すればいい。
+I inserted a few lines into the `plugin/build.gradle` file as follows
 
 ```
 publishing {
@@ -162,6 +148,12 @@ publishing {
     }
 }
 ```
+
+I retried `$ gradle publishToMavenLocal`, then got the following result.
+
+![03](https://kazurayam.github.io/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/03_artifactId_file-diff-plugin.png)
+
+Success!
 
 ## Description
 

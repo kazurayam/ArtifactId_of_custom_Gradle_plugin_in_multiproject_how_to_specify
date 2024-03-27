@@ -28,7 +28,6 @@ gradlePlugin {
     }
 }
 
-/*
 publishing {
     publications {
         maven(MavenPublication) {
@@ -36,5 +35,3 @@ publishing {
         }
     }
 }
- */
-
