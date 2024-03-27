@@ -61,7 +61,7 @@ BUILD SUCCESSFUL in 6m 42s
 
 Gradle generated the following directory and files for me.
 
-![01](https://kazurayam.github.io/Artifact_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/01_project_in_finder.png)
+![01](https://kazurayam.github.io/ArtifactId_of_custom_Gradle_plugin_in_multiproject_how_to_specify/images/01_project_in_finder.png)
 
 In the following description, I would call the `Artifact_of_custom_Gradle_plugin_in_multiproject_how_to_specify` directory as "root" for short. 
 
