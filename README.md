@@ -175,7 +175,7 @@ The doc also writes:
 >Overriding the default identity values is easy: simply specify the groupId, artifactId or version attributes when configuring the MavenPublication.
 
 And the doc shows a sample code. 
-
+g
 ## Conclusion
 
 I could find the way to specify the artifactId of my Gradle custom plugin. Just I needed to read the doc of the Maven Publish plugin. That's all.
