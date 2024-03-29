@@ -2,6 +2,7 @@ plugins {
     id 'java-gradle-plugin'
     id 'groovy'
     id 'maven-publish'
+    id 'base'
 }
 
 repositories {
@@ -10,8 +11,11 @@ repositories {
 }
 
 group = 'com.kazurayam'
-archivesBaseName = 'file-diff-plugin'  // THIS IS IT!
 version = '0.2.0'
+
+base {
+    archivesName = 'file-diff-plugin'
+}
 
 dependencies {
     // Use the awesome Spock testing and specification framework
@@ -32,7 +36,7 @@ gradlePlugin {
 publishing {
     publications {
         maven(MavenPublication) {
-            artifactId = 'file-diff-plugin'
+            artifactId = "${base.archivesName}"
         }
     }
 }
