@@ -25,6 +25,13 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "started", "passed", "skipped", "failed"
+    }
+}
+
 gradlePlugin {
     // Define the plugin
     plugins {
@@ -32,13 +39,6 @@ gradlePlugin {
             id = 'com.kazurayam.file-diff'
             implementationClass = 'com.kazurayam.gradleplugins.filediff.FileDiffPlugin'
         }
-    }
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "started", "passed", "skipped", "failed"
     }
 }
 
